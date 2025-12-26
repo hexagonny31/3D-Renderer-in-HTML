@@ -28,7 +28,7 @@ function point({x, y}) {
 }
 
 function line(p1, p2) {
-    ctx.lineWidth = 3
+    ctx.lineWidth = 2
     ctx.strokeStyle = FOREGROUND
     ctx.beginPath()
     ctx.moveTo(p1.x, p1.y)
@@ -331,11 +331,11 @@ function rotate_xz({x, y, z}, angle) {
 }
 
 const FPS = 70
-let dz = 0.75
+let dz = 0.74
 let scale = 0.035
 let angle = 0
 
-const pivot = {x: 1, y: 10, z: 1}
+const pivot = {x: 1, y: 10.5, z: 1}
 
 function transform({x, y, z}) {
     return translate_z(rotate_xz({
@@ -347,13 +347,13 @@ function transform({x, y, z}) {
 
 function frame() {
     const dt = 1/FPS
-    // dz += 1*dt
+    // dz += 0.5*dt
     angle += 0.5 * Math.PI * dt
     clear()
     
-    // for(const is of fs) {
-    //     face(is)
-    // }
+    for(const is of fs) {
+        face(is)
+    }
     for(const [i, j] of es) {
         const a = vs[i]
         const b = vs[j]
