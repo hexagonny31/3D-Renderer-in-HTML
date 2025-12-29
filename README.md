@@ -44,6 +44,11 @@ These two points define the bounding box of the cuboid. In graph theory terms, t
 <img width="310" height="324" alt="coordinates" src="https://github.com/user-attachments/assets/9d35c83d-4ebd-4d20-9d88-9cd58d8d8ef0" />
 
 The complete set of 8 vertices for one cuboid element can be constructed by taking all combinations of the min/max coordinates along each axis:  
+Set-builder notation:  
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<img width="425" height="19" alt="V_8" src="https://github.com/user-attachments/assets/434135d0-1445-4a07-b8f7-577dd82e1d84" />
+
+Pseudocode:
 ```
 V_8 = {
   {x_a, y_a, z_a},  // from corner (v_0)
@@ -66,18 +71,18 @@ But Blockbench elements may have a "rotation" field.
 }
 ```
 When the element has rotation, we need to transform each of the 8 vertices around a given origin using the standard rotation matrix for a specified axis.  
-For each raw vertex v_i generated above:  
+For each raw vertex v_i generated above:
 ```
 v_i' = R(θ) * (v_i - o) + o
 ```
-1. Translate the origin.  
+1. Translate the origin.
 ```
 dv_i = v_i - o
 ```
 2. Apply the rotation (eg. Around the X-Axis):  
 <img width="868" height="533" alt="image" src="https://github.com/user-attachments/assets/5d07f76b-6ed7-47ce-8334-e53c6626c9cc" />  <br/>
 Mathematical notation:  
-<img width="237" height="66" alt="rotation-matrix-around-x" src="https://github.com/user-attachments/assets/c3b5ed42-a18e-430a-b2cc-789885d722d0" />  <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<img width="237" height="66" alt="rotation-matrix-around-x" src="https://github.com/user-attachments/assets/c3b5ed42-a18e-430a-b2cc-789885d722d0" />  <br/>
 Pseudocode:  
 ```
 x' = dx
