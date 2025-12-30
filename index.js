@@ -19,8 +19,8 @@ function screen(p) {
     }
 }
 
-function point({x, y}) {
-    const r = 7
+function point({x, y}, z) {
+    const r = 3 / z
     ctx.fillStyle = FOREGROUND
     ctx.beginPath()
     ctx.arc(x, y, r, 0, Math.PI * 2)
@@ -1037,6 +1037,14 @@ const fs = [
 ];
 // end of the 3d object
 
+function translate_x({x, y, z}, dx) {
+    return {x: x + dx, y, z,}
+}
+
+function translate_y({x, y, z}, dy) {
+    return {x, y: y + dy, z,}
+}
+
 function translate_z({x, y, z}, dz) {
     return {x, y, z: z + dz}
 }
@@ -1052,11 +1060,11 @@ function rotate_xz({x, y, z}, angle) {
 }
 
 const FPS = 70
-let dz = 0.74
+let dz = 0.80
 let scale = 0.035
 let angle = 0
 
-const pivot = {x: 1, y: 10.5, z: 1}
+const pivot = {x: 0, y: 8, z: 0}
 
 function transform({x, y, z}) {
     return translate_z(rotate_xz({
@@ -1068,18 +1076,24 @@ function transform({x, y, z}) {
 
 function frame() {
     const dt = 1/FPS
-    // dz += 0.5*dt
+    // dz += 0.25*dt
     angle += 0.5 * Math.PI * dt
     clear()
-    
+
     // for(const is of fs) {
     //     face(is)
     // }
     for(const [i, j] of es) {
-        const a = vs[i]
-        const b = vs[j]
-        line(screen(project(transform(a))),
-             screen(project(transform(b))))
+        const a = transform(vs[i])
+        const b = transform(vs[j])
+        if (a.z <= 0.1 || b.z <= 0.1) continue
+        line(screen(project(a)),
+             screen(project(b)))
+    }
+    for(const v of vs) {
+        tv = transform(v)
+        if (tv.z <= 0.1) continue
+        point(screen(project(tv)), tv.z)
     }
     setTimeout(frame, 1000/FPS)
 }
